@@ -15,7 +15,8 @@ class HomeInteractor: PresenterToInteractorProtocol {
     /// Method to fetch weather data
     /// - Parameters: cityName - city
     func getData(cityName: String) {
-        NetworkConnector().fetchWeatherData(cityName: cityName, completion: { (weathers, error) in
+        NetworkConnector().fetchWeatherData(cityName: cityName, completion: { [weak self](weathers, error) in
+            guard let self = self else { return }
             if error == nil {
                 if let weather = weathers {
                     self.weatherDetails = weather
